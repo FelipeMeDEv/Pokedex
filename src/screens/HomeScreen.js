@@ -1,12 +1,16 @@
+// screens/HomeScreen.js
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import usePokemonList from '../hooks/usePokemonList.js';
-import PokemonPicker from '../components/PokemonPicker.js';
-import LoadingSpinner from '../components/LoadingSpinner.js';
+import { signOut } from 'firebase/auth';
+import { auth } from '../services/firebaseConfig';
+
+import usePokemonList from '../hooks/usePokemonList';
+import PokemonPicker from '../components/PokemonPicker';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function HomeScreen({ navigation }) {
   const { pokemonList, selectedPokemon, setSelectedPokemon, loading } = usePokemonList();
 
-  const goToDetails = () => {
+  const handleDetails = () => {
     if (selectedPokemon) {
       navigation.navigate('Details', { pokemonName: selectedPokemon });
     }
@@ -14,10 +18,12 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Pokedex</Text>
       </View>
 
+      {/* Body */}
       <View style={styles.body}>
         {loading ? (
           <LoadingSpinner />
@@ -29,7 +35,7 @@ export default function HomeScreen({ navigation }) {
               pokemonList={pokemonList}
             />
 
-            <TouchableOpacity style={styles.button} onPress={goToDetails}>
+            <TouchableOpacity style={styles.button} onPress={handleDetails}>
               <Text style={styles.buttonText}>Detalhes</Text>
             </TouchableOpacity>
           </>
@@ -48,6 +54,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#EE1C25',
     paddingTop: 50,
     paddingBottom: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   headerTitle: {
@@ -62,7 +71,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   button: {
-    backgroundColor: '#4da6ff',
+    backgroundColor: '#4fc3f7',
     paddingVertical: 14,
     paddingHorizontal: 32,
     borderRadius: 8,
