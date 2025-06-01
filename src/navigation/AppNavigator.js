@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { auth } from '../services/firebaseConfig';
 
@@ -21,21 +22,21 @@ function CustomDrawerContent({ navigation }) {
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.drawerButton}>
-        <Text style={styles.drawerText}>Home</Text>
+        <Ionicons name="home" size={20} color="#333" />
+        <Text style={styles.drawerText}>Home </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.drawerButton}>
+        <Ionicons name="person" size={20} color="#333" />
         <Text style={styles.drawerText}>Perfil</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={async () => {
           await signOut(auth);
-          navigation.getParent()?.reset({
-            index: 0,
-            routes: [{ name: 'Login' }],
-          });
+          navigation.navigate('Login');
         }}
         style={styles.drawerButton}
       >
+        <Ionicons name="log-out" size={20} color="#333" />
         <Text style={styles.drawerText}>Sair</Text>
       </TouchableOpacity>
     </View>
@@ -45,11 +46,24 @@ function CustomDrawerContent({ navigation }) {
 function DrawerNavigator() {
   return (
     <Drawer.Navigator
-      screenOptions={{ headerShown: true }}
+      screenOptions={{
+        headerShown: true,
+        headerStyle: { backgroundColor: '#EE1C25' }, 
+        headerTintColor: '#fff', 
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: 'Pokedex Home' }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Pokedex Perfil' }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -92,6 +106,9 @@ export default function AppNavigator() {
 
 const styles = StyleSheet.create({
   drawerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     paddingVertical: 16,
     borderBottomWidth: 1,
     borderColor: '#ccc',

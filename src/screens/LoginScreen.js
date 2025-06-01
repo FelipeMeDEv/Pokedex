@@ -14,7 +14,8 @@ export default function LoginScreen({ navigation }) {
 
     try {
       await signInWithEmailAndPassword(auth, email, senha);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(error);
       Alert.alert('Erro ao fazer login', error.message);
     }

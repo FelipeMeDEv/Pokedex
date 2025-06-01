@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../services/firebaseConfig';
+import LoadingSpinner from '../components/LoadingSpinner';  
 
 export default function ProfileScreen({ navigation }) {
   const [userData, setUserData] = useState(null);
@@ -32,8 +33,8 @@ export default function ProfileScreen({ navigation }) {
 
   if (!userData) {
     return (
-      <View style={styles.center}> 
-        <Text>Carregando...</Text>
+      <View style={styles.center}>
+        <LoadingSpinner /> 
       </View>
     );
   }

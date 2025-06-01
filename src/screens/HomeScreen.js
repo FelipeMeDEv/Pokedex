@@ -1,7 +1,4 @@
-// screens/HomeScreen.js
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { signOut } from 'firebase/auth';
-import { auth } from '../services/firebaseConfig';
 
 import usePokemonList from '../hooks/usePokemonList';
 import PokemonPicker from '../components/PokemonPicker';
@@ -18,17 +15,13 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Pokedex</Text>
-      </View>
-
-      {/* Body */}
       <View style={styles.body}>
         {loading ? (
           <LoadingSpinner />
         ) : (
           <>
+            <Text style={styles.title}>Escolha seu Pokémon</Text>
+
             <PokemonPicker
               selectedPokemon={selectedPokemon}
               onValueChange={setSelectedPokemon}
@@ -50,31 +43,25 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f2f2f2',
   },
-  header: {
-    backgroundColor: '#EE1C25',
-    paddingTop: 50,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
   body: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   button: {
     backgroundColor: '#4fc3f7',
     paddingVertical: 14,
     paddingHorizontal: 32,
     borderRadius: 8,
+    marginTop: 20,
   },
   buttonText: {
     color: '#fff',
